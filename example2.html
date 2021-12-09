@@ -1,0 +1,62 @@
+<?php
+
+$con=mysqli_connect("localhost","root","","ourproject");
+?>
+<!DOCTYPE html>
+<html>
+    
+    <button id="imbutton">Load</button>
+    <button id="save">save</button>
+    <p id="alright"></p>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+    $(document).ready(function()
+    {
+        function loadtable()
+        {
+       $("#imbutton").on("click",function(e)
+       {
+       
+         
+          $.ajax({
+                       url : "wait.php",
+                       type : "POST",
+                       success : function(data)
+                       {
+                           $("#alright").html(data);
+                       }
+                  });
+        });
+    }
+    loadtable();
+
+    
+
+    });
+
+
+
+    </script>
+    
+    
+
+
+
+
+</html>
+<?php
+    if(isset($_POST["save"]))
+             {
+               
+              if(!empty($_POST["check"]))
+              {
+               foreach($_POST["check"] as $lets)
+               {
+                   $update=mysqli_query($con,"UPDATE queriestable SET status ='ACCEPTED' where senderid='{$lets}'");
+               }
+            }
+        }
+    
+    ?>
